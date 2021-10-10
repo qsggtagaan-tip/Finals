@@ -1,0 +1,36 @@
+---
+- name: Create docker directory
+  file:
+    path: docker
+    state: directory
+
+- name: Copy from docker dir files to remote
+  copy:
+    src: docker/
+    dest: docker/
+
+- name: Build ELK stack using Docker image
+  docker_image:
+    name: "{{ docker_elk_image_name }}"
+    build:
+      path: "{{ docker_elk_dockerfile_path }}"
+      pull: no
+    state: present
+    source: build
+  register: elk_docker_img
+
+- name: Clear iptables routing filter
+  shell: iptables -F; iptables -X
+  when: elk_docker_img.changed
+
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
+
+- name: Run ELK Stack
+  docker_container:
+    name: "{{ docker_elk_container_name }}"
+    image: "{{ docker_elk_image_name }}:{{ docker_elk_image_tag }}"
+    state: started
+    ports: "{{ elk_ports }}"
