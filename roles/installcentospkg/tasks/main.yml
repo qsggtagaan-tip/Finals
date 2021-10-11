@@ -1,0 +1,20 @@
+---
+- name: Add repository file
+  copy:
+    src: "{{ src }}"
+    dest: "{{ dest }}"
+    mode: '0755'
+  when: src is defined
+
+- name: Install package using yum
+  yum:
+    name: "{{ package }}"
+    state: latest
+    update_cache: yes
+
+- name: Start service
+  service:
+    name: "{{ service }}"
+    state: started
+    enabled: yes
+  when: service is defined

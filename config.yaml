@@ -1,2 +1,30 @@
-motd: "Ansible Managed by qsggtagaan-tip"
-user: "sysad"
+#Git Repository
+git_repo: "https://github.com/qsggtagaan-tip/Finals.git"
+git_dest: "/home/{{ansible_user}}//Finals"
+git_ver: "final-exam"
+
+#MOTD Text
+motd: "Ansible Managed by {{ansible_user}}"
+
+#FTP
+vsftpd_ubuntu: vsftpd-u.conf
+vsftpd_centos: vsftpd-c.conf
+vsftpd_opensuse: vsftpd-o.conf
+ftp_user: ftpuser
+ftp_comment: "FTP User"
+
+#ELK
+docker_repo: docker-ce.repo
+
+#Docker Images
+elasticsearch_img: "docker.elastic.co/elasticsearch/elasticsearch:7.10.1"
+logstash_img: "docker.elastic.co/logstash:7.10.1"
+kibana_img: "docker.elastic.co/kibana/kibana:7.10.1"
+
+#Hostname
+elasticsearch_hostname: elasticsearch
+logstash_hostname: logstash
+kibana_hostname: kibana
+
+#Logstash
+logstash_conf: "logstash.conf2"
